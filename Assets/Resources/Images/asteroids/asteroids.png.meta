@@ -1,0 +1,179 @@
+fileFormatVersion: 2
+guid: 9446f3a7deff8d545b585cb3c7b4d1a9
+timeCreated: 1442694624
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: asteroids_0
+    21300002: asteroids_1
+    21300004: asteroids_2
+    21300006: asteroids_4
+    21300008: asteroids_6
+    21300010: asteroids_7
+    21300012: asteroids_8
+    21300014: asteroids_9
+    21300016: asteroids_10
+    21300018: asteroids_12
+    21300020: asteroids_15
+    21300022: asteroids_16
+    21300024: asteroids_18
+    21300026: asteroids_19
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 500
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: asteroids_0
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 747
+        width: 336
+        height: 296
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: asteroids_2
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 683
+        width: 373
+        height: 397
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: asteroids_4
+      rect:
+        serializedVersion: 2
+        x: 986
+        y: 728
+        width: 354
+        height: 324
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: asteroids_6
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 403
+        width: 321
+        height: 301
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: asteroids_7
+      rect:
+        serializedVersion: 2
+        x: 1397
+        y: 850
+        width: 183
+        height: 176
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: asteroids_8
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 813
+        width: 240
+        height: 221
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: asteroids_9
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 457
+        width: 165
+        height: 151
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: asteroids_10
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 468
+        width: 176
+        height: 147
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: asteroids_12
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 0
+        width: 501
+        height: 396
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: asteroids_15
+      rect:
+        serializedVersion: 2
+        x: 1264
+        y: 0
+        width: 606
+        height: 392
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: asteroids_18
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 0
+        width: 456
+        height: 280
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
