@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Utils;
 
 /**
- *  This is attached to the body that is being rotated around (eg attached to Earth with a reference to Moon).
+ *  This is attached any game object such as the Game Manager, and finds all the gravitatables 
+ *  such as type "Asteroids".
+ *  Also does some basic initialization for setting mass, adding rigidbodies and colliders to earth and moon.
  */
 public class GravityManager : MonoBehaviour {
     
@@ -24,10 +25,10 @@ public class GravityManager : MonoBehaviour {
 	void Start () {
         FindGravitatables();
         AddTrailRenderers();
-        AddRigidbody(moon);
-        //AddRigidbody(earth);
-        SetMass(moon, MASS_MOON);
-        SetMass(earth, MASS_EARTH);
+        Utils.AddRigidbody(moon);
+        //Utils.AddRigidbody(earth);
+        Utils.SetMass(moon, MASS_MOON);
+        Utils.SetMass(earth, MASS_EARTH);
     }
 	
 	void Update () {
@@ -67,7 +68,6 @@ public class GravityManager : MonoBehaviour {
             Color col = new Color(1 / dist, 0f, 0f);
             Debug.DrawRay(gravit.transform.position, dir, col);
         }
-
     }
 
     //void PushPerp(Vector3 dir, float dist)
@@ -92,75 +92,12 @@ public class GravityManager : MonoBehaviour {
         }
     }
 
-    void AddRigidbody(GameObject gameObject)
-    {
-        if (gameObject.GetComponent<Rigidbody2D>() == null)
-        {
-            rb = gameObject.AddComponent<Rigidbody2D>();
-            rb.gravityScale = 0;
-        }
-    }
-
-    void FreezeRigidbody(GameObject gameObject)
-    {
-        if (gameObject.GetComponent<Rigidbody2D>() != null)
-        {
-            rb = gameObject.AddComponent<Rigidbody2D>();
-            rb.gravityScale = 0;
-        }
-        else
-        {
-            Debug.LogWarning("Can't freeze " + gameObject.name + ", rigidbody is missing.");
-        }
-    }
-
     void AddTrailRenderers()
     {
-        AddTrailRenderer(moon, 150f);
+        Utils.AddTrailRenderer(moon, 150f);
         foreach (var gravit in gravitatables)
         {
-            AddTrailRenderer(gravit, 5f);
-        }
-    }
-
-    void AddTrailRenderer(GameObject gameObject, float duration)
-    {
-        if (gameObject.GetComponent<TrailRenderer>() == null)
-        {
-            TrailRenderer tr = gameObject.AddComponent<TrailRenderer>();
-            tr.time = duration;
-            tr.startWidth = 0.2f;
-            tr.endWidth = 0.1f;
-            //tr.material = Resources.Load<Material>("Materials/Test");
-            //tr.material.color = new Color(0f,0f,1f);
-            //tr.material.SetColor(0, new Color(0f, 0f, 1f));
-            //print(tr.material.GetInstanceID());
-            tr.materials[0] = Resources.Load<Material>("Materials/Test");
-
-            foreach (Material material in tr.materials)
-            {
-                //material.color = new Color(0f,0f,1f);
-                print(material.color);
-                print(material);
-            }
-
-            /*
-            for (int i = 0; i < tr.materials.Length; i++) {
-                tr.materials[i] = Resources.Load<Material>("tMaterials/Test");
-                print(tr.materials[i].color);
-                print(tr.materials[i]);
-            }*/
-
-        }
-    }
-
-    void SetMass(GameObject gameObject, float mass)
-    {
-        if (gameObject != null) 
-        {
-            Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-            if (rb == null) { Debug.LogWarning("Rigidbody2D missing on: " + gameObject.name + "! Cannot set mass." );  return; }
-            rb.mass = mass;
+            Utils.AddTrailRenderer(gravit, 5f);
         }
     }
 }
