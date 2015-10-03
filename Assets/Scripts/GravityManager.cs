@@ -54,6 +54,7 @@ public class GravityManager : MonoBehaviour {
         planets.Add(moon);
     }
 
+    //pull towards the planets with FORCES! :D
     void PullGravitatables()
     {
         //unsafe unchecked
@@ -74,6 +75,7 @@ public class GravityManager : MonoBehaviour {
     }
 
     //void PushPerp(Vector3 dir, float dist)
+    //applies a velocity on a perpendicular angle
     void PushPerp()
     {
         //push perpendicular to line between other object and this object

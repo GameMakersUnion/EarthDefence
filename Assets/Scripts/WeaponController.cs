@@ -19,7 +19,6 @@ public class WeaponController : MonoBehaviour {
     void Update()
     {
 
-
         Touch[] touches = Input.touches;
         if (touches.Length > 0)
         {
@@ -44,7 +43,8 @@ public class WeaponController : MonoBehaviour {
                     Debug.Log("Delta" + endPosition);
                     Debug.Log("End" + touches[0].position);
                     //endPostion = startPostion-touches[0].position;
-                    instance = Instantiate(launch,new Vector3(-10.0f, -4.0f, 0.0f), Quaternion.identity) as GameObject;
+                    if (launch == null) return;
+                    instance = Instantiate(launch, new Vector3(-10.0f, -4.0f, 0.0f), Quaternion.identity) as GameObject;
                     if (instance)
                     {
                         instance.GetComponent<Rigidbody2D>().AddForce(-Vector2.ClampMagnitude(endPosition - (startPosition), radius) * 0.01f, ForceMode2D.Impulse);
