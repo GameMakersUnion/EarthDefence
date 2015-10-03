@@ -5,7 +5,7 @@ public class Earth : MonoBehaviour {
 
     GameObject earth;
 
-	void Start () {
+	void Awake () {
         earth = gameObject; //for easier reading
         Utils.AddRigidbody(earth);
         Utils.FreezeRigidbody(earth);

@@ -8,14 +8,13 @@ public class Fire {
 
     //object that's being fired
     public GameObject fireObject;
-    public float fireForce;
 
     //to discuss
     //public Vector3 fireDirection
 
-    Fire(GameObject fireObject, float fireForce)
+    public Fire(GameObject fireObject)
     {
         this.fireObject = fireObject;
-        this.fireForce = fireForce;
     }
+
 }

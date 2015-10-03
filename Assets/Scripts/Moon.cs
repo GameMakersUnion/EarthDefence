@@ -7,7 +7,7 @@ public class Moon : MonoBehaviour {
     public Transform launch;
     CircleCollider2D colMoon;
 
-	void Start () {
+	void Awake () {
         moon = gameObject; //for easier reading	
         colMoon = Utils.AddCollider(moon);
         Utils.AddRigidbody(moon);
@@ -28,8 +28,13 @@ public class Moon : MonoBehaviour {
         GameObject fireMe = gameObjectToFire.fireObject;
         CircleCollider2D colFire = fireMe.GetComponent<CircleCollider2D>();
 
-        if (colFire == null) {
-            Debug.LogWarning("Cannot fire " + fireMe.name + ", it's collider is missing!"); 
+        if (fireMe == null)
+        {
+            Debug.LogWarning("Cannot fire " + fireMe.name + ", it's null!");
+        }
+        else if (colFire == null)
+        {
+            Debug.LogWarning("Cannot fire " + fireMe.name + ", it's collider is missing!");
         }
         else if (launch == null)
         {
@@ -43,8 +48,9 @@ public class Moon : MonoBehaviour {
             if (launch == null) { Debug.Log("Moon's Launch object cannot be found."); return; }
 
             //places just outside moon, safely
-            launch.position = moon.transform.position + new Vector3(dir.x * radiusMoon, dir.y * radiusMoon, moon.transform.position.z) + new Vector3(dir.x * radiusFire, dir.y * radiusFire, 0);
-            //Instantiate();
+			launch.position = moon.transform.position + new Vector3(dir.x * radiusMoon, dir.y * radiusMoon, moon.transform.position.z) + new Vector3(dir.x * radiusFire, dir.y * radiusFire, 0);
+			launch.position += new Vector3(-3,3,0);
+			GameObject instance = Instantiate(fireMe, launch.position, Quaternion.identity) as GameObject;
         }
         else
         {
