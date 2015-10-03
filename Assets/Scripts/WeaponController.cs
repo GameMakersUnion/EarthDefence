@@ -47,7 +47,7 @@ public class WeaponController : MonoBehaviour {
                     Rigidbody2D rb = Utils.AddRigidbody(launch);
                     Utils.AddCollider(launch);
                     rb.AddForce(-Vector2.ClampMagnitude(endPosition - (startPosition), radius) * 0.01f, ForceMode2D.Impulse);
-
+                    //Utils.AddTrailRenderer(launch, 15f);
                     //prepare Fireable object
                     Fire fire = new Fire(launch);
                     BroadcastMessage("Launch", fire);

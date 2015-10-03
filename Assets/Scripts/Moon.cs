@@ -15,6 +15,34 @@ public class Moon : MonoBehaviour {
         Utils.SetMass(moon, GravityManager.MASS_MOON);
         Utils.AddTrailRenderer(moon, 150f);
         launch = moon.transform.Find("Launch");
+        MoveLaunch();
+    }
+
+    // prevent case where launcher is directly centered on moon, which causes an error later.
+    void MoveLaunch()
+    {
+		if (launch.transform.position == moon.transform.position)
+        {
+            GameObject earth = GameObject.FindGameObjectWithTag("Earth");
+            if (earth == null)
+            {
+                Debug.LogWarning("Earth is missing, can't safely check Launch position!");
+                return;
+            }
+
+            if (colMoon == null)
+            {
+                Debug.LogWarning("Moon's collider is missing, can't safely check Launch position!");
+                return;
+            } 
+            
+            //do main logic
+            //no suitable default launch position was found, move to outward face of moon, away from earth
+            Vector3 dir = (earth.transform.position - moon.transform.position).normalized;
+            launch.position = moon.transform.position + new Vector3(dir.x * colMoon.radius, dir.y * colMoon.radius, moon.transform.position.z);
+            Debug.Log("Moon's Launcher moved from " + Vector3.zero + " to " + launch.position);
+
+        }
     }
 
     /**
@@ -49,7 +77,7 @@ public class Moon : MonoBehaviour {
 
             //places just outside moon, safely
 			launch.position = moon.transform.position + new Vector3(dir.x * radiusMoon, dir.y * radiusMoon, moon.transform.position.z) + new Vector3(dir.x * radiusFire, dir.y * radiusFire, 0);
-			launch.position += new Vector3(-3,3,0);
+			//launch.position += new Vector3(-3,3,0);
 			GameObject instance = Instantiate(fireMe, launch.position, Quaternion.identity) as GameObject;
         }
         else
