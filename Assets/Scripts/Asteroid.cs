@@ -18,7 +18,8 @@ public class Asteroid : MonoBehaviour {
         Rigidbody2D rb = ast.GetComponent<Rigidbody2D>();
         if (rb == null) rb = ast.AddComponent<Rigidbody2D>();
         rb.gravityScale = 0;
-        PolygonCollider2D col = ast.GetComponent<PolygonCollider2D>();
-        if (col == null) col = ast.AddComponent<PolygonCollider2D>();    
+        CircleCollider2D col = ast.GetComponent<CircleCollider2D>();
+        if (col == null) col = ast.AddComponent<CircleCollider2D>();
+        rb.velocity = new Vector2(Random.Range(-0.5f, 0.5f), (Random.Range(-0.5f, 0.5f)));
 	}
 }

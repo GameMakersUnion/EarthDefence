@@ -13,17 +13,20 @@ public class GravityManager : MonoBehaviour {
     float mass;
     Rigidbody2D rb;
     //F=ma
-    float gravityCon = 2.15f;
+    float gravityCon = 1.15f;
+    public static float MASS_MOON = .1f;
+    public static float MASS_EARTH = 1f;
+    enum axisRotation { COUNTERCLOCKWISE = -1, CLOCKWISE = 1 };
+
 
 	// Use this for initialization
 	void Start () {
         FindGravitatables();
-        AddTrailRenderer(moon);
+        AddTrailRenderers();
         AddRigidbody(moon);
-        AddRigidbody(earth);
-        SetMass(moon, 10f);
-        SetMass(earth, 30f);
-        PushPerp();
+        //AddRigidbody(earth);
+        SetMass(moon, MASS_MOON);
+        SetMass(earth, MASS_EARTH);
     }
 	
 	void Update () {
@@ -33,16 +36,14 @@ public class GravityManager : MonoBehaviour {
         }
         FindGravitatables();
         PullGravitatables();
+        //PushPerp();
         //Debug.Log("vel:" + moonTest.GetComponent<Rigidbody>().velocity);        
     }
 
     //find objects to pull into gravitation well
     void FindGravitatables()
     {
-        //List<Test> test = GameObject.FindObjectsOfType<Test>();
-        //gravitatables = ((GameObject[])FindObjectsOfType(typeof(Asteroid))).ToList();
-        gravitatables = FindObjectsOfType<Asteroid>().Select(a => a.gameObject).ToList();
-        
+        gravitatables = FindObjectsOfType<Asteroid>().Select(a => a.gameObject).ToList();        
         print("Found " + gravitatables.Count + " gravitatables.");
         moon = GameObject.FindWithTag("Moon");
         if (moon == null) { Debug.LogWarning("Moon missing!"); return; }
@@ -63,13 +64,9 @@ public class GravityManager : MonoBehaviour {
             //F = ma 
             //F = G(m1*m2)/r^2
             Color col = new Color(1 / dist, 0f, 0f);
-
             Debug.DrawRay(gravit.transform.position, dir, col);
-            //PushPerp(dir, dist);
-
         }
 
-        PushPerp();
     }
 
     //void PushPerp(Vector3 dir, float dist)
@@ -87,7 +84,10 @@ public class GravityManager : MonoBehaviour {
             //Debug.Log(dir + ": " + perp);
             Color col = new Color(0f, 1 / dist, 0f);
             Debug.DrawRay(gravit.transform.position, perp, col);
-            gravit.GetComponent<Rigidbody2D>().velocity = (perp * Mathf.Sqrt(gravityCon * 3f * mass / dist));
+            int r = Random.Range(0, 5);
+            axisRotation axis = ( r == 0 ) ? axisRotation.COUNTERCLOCKWISE : axisRotation.CLOCKWISE ;
+            Debug.Log(r + " " + axis);
+            gravit.GetComponent<Rigidbody2D>().velocity = ((int)axis * perp * Mathf.Sqrt(gravityCon * 1f * mass / dist));
         }
     }
 
@@ -100,12 +100,34 @@ public class GravityManager : MonoBehaviour {
         }
     }
 
-    void AddTrailRenderer(GameObject gameObject)
+    void FreezeRigidbody(GameObject gameObject)
+    {
+        if (gameObject.GetComponent<Rigidbody2D>() != null)
+        {
+            rb = gameObject.AddComponent<Rigidbody2D>();
+            rb.gravityScale = 0;
+        }
+        else
+        {
+            Debug.LogWarning("Can't freeze " + gameObject.name + ", rigidbody is missing.");
+        }
+    }
+
+    void AddTrailRenderers()
+    {
+        AddTrailRenderer(moon, 150f);
+        foreach (var gravit in gravitatables)
+        {
+            AddTrailRenderer(gravit, 5f);
+        }
+    }
+
+    void AddTrailRenderer(GameObject gameObject, float duration)
     {
         if (gameObject.GetComponent<TrailRenderer>() == null)
         {
             TrailRenderer tr = gameObject.AddComponent<TrailRenderer>();
-            tr.time = 150f;
+            tr.time = duration;
             tr.startWidth = 0.2f;
             tr.endWidth = 0.1f;
             //tr.material = Resources.Load<Material>("Materials/Test");
