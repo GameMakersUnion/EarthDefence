@@ -43,14 +43,7 @@ public class WeaponController : MonoBehaviour {
                     Debug.Log("Delta" + endPosition);
                     Debug.Log("End" + touches[0].position);
                     //endPostion = startPostion-touches[0].position;
-<<<<<<< HEAD
-                    if (launch == null) return;
-                    instance = Instantiate(launch, new Vector3(-10.0f, -4.0f, 0.0f), Quaternion.identity) as GameObject;
-                    if (instance)
-                    {
-                        instance.GetComponent<Rigidbody2D>().AddForce(-Vector2.ClampMagnitude(endPosition - (startPosition), radius) * 0.01f, ForceMode2D.Impulse);
-                    }
-=======
+
                     if (launch == null) { Debug.LogWarning("Missing launch object in weaponcontroller"); return; }
                     Rigidbody2D rb = Utils.AddRigidbody(launch);
                     Utils.AddCollider(launch);
@@ -60,8 +53,6 @@ public class WeaponController : MonoBehaviour {
                     Fire fire = new Fire(launch);
                     BroadcastMessage("Launch", fire);
                     //instance = Instantiate(launch, new Vector3(-10.0f, -4.0f, 0.0f), Quaternion.identity) as GameObject;
-
->>>>>>> origin/master
                 }
                 //worldPos = Camera.main.ScreenToWorldPoint(Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
                 Vector2 clamped = Vector2.ClampMagnitude(endPosition - (startPosition), radius);
