@@ -43,21 +43,16 @@ public class WeaponController : MonoBehaviour {
                     Debug.Log("Delta" + endPosition);
                     Debug.Log("End" + touches[0].position);
                     //endPostion = startPostion-touches[0].position;
-                    if (launch == null) { Debug.LogWarning("Missing launch object in weaponcontroller"); return; }
-                    Rigidbody2D rb = Utils.AddRigidbody(launch);
-                    Utils.AddCollider(launch);
-                    rb.AddForce(-Vector2.ClampMagnitude(endPosition - (startPosition), radius) * 0.01f, ForceMode2D.Impulse);
-
-                    //prepare Fireable object
-                    Fire fire = new Fire(launch);
-                    BroadcastMessage("Launch", fire);
-                    //instance = Instantiate(launch, new Vector3(-10.0f, -4.0f, 0.0f), Quaternion.identity) as GameObject;
-
+                    if (launch == null) return;
+                    instance = Instantiate(launch, new Vector3(-10.0f, -4.0f, 0.0f), Quaternion.identity) as GameObject;
+                    if (instance)
+                    {
+                        instance.GetComponent<Rigidbody2D>().AddForce(-Vector2.ClampMagnitude(endPosition - (startPosition), radius) * 0.01f, ForceMode2D.Impulse);
+                    }
                 }
                 //worldPos = Camera.main.ScreenToWorldPoint(Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
-
-                //draws the line where touch
                 Vector2 clamped = Vector2.ClampMagnitude(endPosition - (startPosition), radius);
+                
                 lineRenderer.SetPosition(0, Camera.main.ScreenToWorldPoint(startPosition)+ Vector3.forward);
                 lineRenderer.SetPosition(1, Camera.main.ScreenToWorldPoint(clamped+ startPosition) + Vector3.forward);
                 
