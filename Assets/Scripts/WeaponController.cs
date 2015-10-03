@@ -4,8 +4,11 @@ using System.Collections;
 public class WeaponController : MonoBehaviour {
 
     Vector2 startPosition;
-    Vector2 endPostion;
+    Vector2 endPosition;
     LineRenderer lineRenderer;
+    public float radius = 200.0f;
+    public GameObject launch;
+    GameObject instance;
 
     // Use this for initialization
     void Start () {
@@ -25,27 +28,33 @@ public class WeaponController : MonoBehaviour {
             {
                 if (touches[0].phase == TouchPhase.Began)
                 {
-                    Debug.Log("Start"+touches[0].position);
+                    Debug.Log("Start" + touches[0].position);
                     //lineRenderer.
                     startPosition = touches[0].position;
-                    endPostion = startPosition;
+                    endPosition = startPosition;
                 }
                 else if (touches[0].phase == TouchPhase.Moved)
                 {
                     //Debug.Log(touches[0].deltaPosition);
-                    endPostion = touches[0].position;
-                    Debug.DrawLine(startPosition, endPostion, Color.red);
+                    endPosition = touches[0].position;
+                    Debug.DrawLine(startPosition, endPosition, Color.red);
                 }
                 else if (touches[0].phase == TouchPhase.Ended)
                 {
-                    Debug.Log("Delta" + endPostion);
-                    Debug.Log("End"+touches[0].position);
+                    Debug.Log("Delta" + endPosition);
+                    Debug.Log("End" + touches[0].position);
                     //endPostion = startPostion-touches[0].position;
+                    instance = Instantiate(launch,new Vector3(-10.0f, -4.0f, 0.0f), Quaternion.identity) as GameObject;
+                    if (instance)
+                    {
+                        instance.GetComponent<Rigidbody2D>().AddForce(-Vector2.ClampMagnitude(endPosition - (startPosition), radius) * 0.01f, ForceMode2D.Impulse);
+                    }
                 }
                 //worldPos = Camera.main.ScreenToWorldPoint(Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
+                Vector2 clamped = Vector2.ClampMagnitude(endPosition - (startPosition), radius);
                 
                 lineRenderer.SetPosition(0, Camera.main.ScreenToWorldPoint(startPosition)+ Vector3.forward);
-                lineRenderer.SetPosition(1, Camera.main.ScreenToWorldPoint(endPostion) + Vector3.forward);
+                lineRenderer.SetPosition(1, Camera.main.ScreenToWorldPoint(clamped+ startPosition) + Vector3.forward);
                 
             }
 
