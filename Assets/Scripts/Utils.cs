@@ -62,8 +62,9 @@ public static class Utils
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb = gameObject.AddComponent<Rigidbody2D>();
             rb.gravityScale = 0;
+            rb.freezeRotation = true;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
         else
         {
