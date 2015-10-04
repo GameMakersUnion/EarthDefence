@@ -95,6 +95,7 @@ public class Moon : MonoBehaviour {
 			//launch.position = moon.transform.position + new Vector3(dir.x * radiusMoon, dir.y * radiusMoon, moon.transform.position.z) + new Vector3(dir.x * radiusFire, dir.y * radiusFire, 0);
 			//launch.position += new Vector3(-3,3,0);
 			GameObject instance = Instantiate(fireMe, launch.position, Quaternion.identity) as GameObject;
+            instance.GetComponent<Rigidbody2D>().AddForce(gameObjectToFire.initialForce,ForceMode2D.Impulse);
         }
         else
         {
