@@ -12,9 +12,9 @@ public class GravityManager : MonoBehaviour {
     List<GameObject> gravitatables; //attracting objects, aka asteroids
     List<GameObject> planets; //destination objects, the earth and moon
     //F=ma
-    public static float GRAVITY_CONSTANT = 1.15f;
-    public static float MASS_MOON = .1f;
-    public static float MASS_EARTH = 1f;
+    public static float GRAVITY_CONSTANT = 0.667408f;
+    public static float MASS_MOON = 100f;
+    public static float MASS_EARTH = 100f;
     enum axisRotation { COUNTERCLOCKWISE = -1, CLOCKWISE = 1 };
 
 
@@ -62,14 +62,20 @@ public class GravityManager : MonoBehaviour {
         {
             foreach (var planet in planets)
             {
-                float dist = Vector3.Distance(gravit.transform.position, planet.transform.position);
+                /*
+                //float dist = Vector3.Distance(gravit.transform.position, planet.transform.position);
+                float distSqr = (planet.transform.position - gravit.transform.position).sqrMagnitude;
                 Vector3 dir = (planet.transform.position - gravit.transform.position).normalized;
-                float mass = planet.GetComponent<Rigidbody2D>().mass;
-                gravit.GetComponent<Rigidbody2D>().AddForce(GRAVITY_CONSTANT * mass / (dist * dist) * dir);
+                float mass1 = gravit.GetComponent<Rigidbody2D>().mass;
+                float mass2 = planet.GetComponent<Rigidbody2D>().mass;
+                //gravit.GetComponent<Rigidbody2D>().AddForce(GRAVITY_CONSTANT * (mass1 * mass2) / (dist * dist) * dir);
+                gravit.GetComponent<Rigidbody2D>().AddForce(GRAVITY_CONSTANT * (mass1 * mass2) / (distSqr) * dir);
                 //F = ma 
                 //F = G(m1*m2)/r^2
-                Color col = new Color(1 / dist, 1f, 0f);
+                //Color col = new Color(1 / dist, 1f, 0f);
+                Color col = new Color(1 / distSqr, 1f, 0f);
                 Debug.DrawRay(gravit.transform.position, dir, col);
+                 */
             }
         }
     }
@@ -96,7 +102,7 @@ public class GravityManager : MonoBehaviour {
                 axisRotation axis = ( r == 0 ) ? axisRotation.COUNTERCLOCKWISE : axisRotation.CLOCKWISE ;
                 //Debug.Log(r + " " + axis);
                 float mass = planet.GetComponent<Rigidbody2D>().mass;
-                gravit.GetComponent<Rigidbody2D>().velocity = ((int)axis * perp * Mathf.Sqrt(GRAVITY_CONSTANT * 1f * mass / dist));
+                gravit.GetComponent<Rigidbody2D>().velocity = ((int)axis * perp * Mathf.Sqrt(GRAVITY_CONSTANT * mass / dist));
             }
         }
     }

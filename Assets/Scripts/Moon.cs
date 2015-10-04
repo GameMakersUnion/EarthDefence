@@ -146,32 +146,32 @@ public class Moon : MonoBehaviour {
      */
     void OnCollisionEnter2D(Collision2D coll)
     {
-        print(coll.gameObject.name);
+        //print(coll.gameObject.name);
         if (coll.gameObject.GetComponent<Asteroid>()!=null){
             //step1
             Vector3 asteroidNewDir = (coll.transform.position - moon.transform.position).normalized;
-            print(asteroidNewDir);
+            //print(asteroidNewDir);
             //step2
             //float magnitude = rb.velocity.magnitude;
             float magnitude = storedVel.magnitude;
-            print(magnitude);
+            //print(magnitude);
             //step3
             //float step3 = Vector3.Dot(rb.velocity, asteroidNewDir);
             //Debug.DrawLine(Vector3.zero, asteroidNewDir * 10f);
             //Debug.DrawLine(Vector3.zero, storedVel * 10f);
             float step3 = 1 - Vector3.Dot(asteroidNewDir, storedVel);
-            print(step3);
+            //print(step3);
             //step4
             float step4 = magnitude * step3;
-            print(step4);
+            //print(step4);
             //step5
             Vector3 step5 = asteroidNewDir * step4;
             //step6
             Rigidbody2D astRb = coll.gameObject.GetComponent<Rigidbody2D>();
             if (astRb == null) { Debug.LogWarning("Asteroid missing a rigidbody, cannot assign new velocity."); return; }
-            Debug.Log("Asteroid " + coll.gameObject.name + "had velocity: " + astRb.velocity + ", now has: " + step5);
+            //Debug.Log("Asteroid " + coll.gameObject.name + "had velocity: " + astRb.velocity + ", now has: " + step5);
             astRb.velocity = step5 * 25f;
-            Debug.DrawLine(Vector3.zero, astRb.velocity );
+            //Debug.DrawLine(Vector3.zero, astRb.velocity );
 
 
             //Debug.Break();
