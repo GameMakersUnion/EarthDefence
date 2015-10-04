@@ -9,6 +9,8 @@ public class Moon : MonoBehaviour {
     CircleCollider2D colMoon;
     Rigidbody2D rb;
     float angle;
+    thrusterSpeeds thrusterSpeed;
+    enum thrusterSpeeds { SLOW=5, OKAY=15, FAST=50}
 
     Vector3 lastPos;
     Vector3 newPos;
@@ -30,6 +32,7 @@ public class Moon : MonoBehaviour {
     void InitMoon()
     {
         angle = 180 + Utils.FindAngle(moon.transform.position, earth.transform.position);
+        thrusterSpeed = thrusterSpeeds.FAST;
     }
 
     /** 
@@ -107,6 +110,8 @@ public class Moon : MonoBehaviour {
     }
 
     /** 
+     *  Moon Movement occurs purely positionally, i.e. fake physics.
+     *  Any resultant collisions must be and are manually calculated.
      *  Move moon on circular path relative to earth.
      *  Note this doesn't obey physics, it's a fake orbit.
      *  When moveDir is -1, it means left when moon is above earth. +1 is right.
@@ -136,7 +141,7 @@ public class Moon : MonoBehaviour {
 
         if (moveDir != 0)
         {
-            float nextAngle = (angle - 1 * moveDir) % 360;
+            float nextAngle = (angle - 1 * moveDir * Time.deltaTime * (float)thrusterSpeed) % 360;
 
             //wraps in underneath from left side
             angle = nextAngle;
@@ -146,6 +151,7 @@ public class Moon : MonoBehaviour {
 
     /**
      *  Need manually calculate physics of objects the moon collides into
+     *  RIP clean code
      */
     void OnCollisionEnter2D(Collision2D coll)
     {
@@ -191,6 +197,15 @@ public class Moon : MonoBehaviour {
 
         }
     
+    }
+
+    /**
+     *  Increase only to max enumeration, and decrease only to minimum.
+     *  Can receive BroadcastMessage ("SetThrusterSpeed", bool);
+     */
+    void SetThrusterSpeed(bool increase)
+    {
+
     }
 
 }
