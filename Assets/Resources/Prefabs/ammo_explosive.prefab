@@ -14,6 +14,7 @@ GameObject:
   - 58: {fileID: 5866058}
   - 96: {fileID: 9669808}
   - 114: {fileID: 11463410}
+  - 114: {fileID: 11475398}
   m_Layer: 0
   m_Name: ammo_explosive
   m_TagString: Untagged
@@ -127,6 +128,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60e07abeef8d76b4190c625c6e56ed0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11475398
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60f62e6bd0417204da5eabcf632b6fd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &21204460

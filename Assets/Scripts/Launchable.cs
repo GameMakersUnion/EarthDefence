@@ -37,7 +37,7 @@ public class Launchable : MonoBehaviour {
 
     }
 
-    void OnTriggerExit2D(Collision2D coll)
+    void OnTriggerExit2D(Collider2D coll)
     {
         c.enabled = true;
     }

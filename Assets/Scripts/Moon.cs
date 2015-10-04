@@ -69,6 +69,7 @@ public class Moon : MonoBehaviour {
      */
     void Launch(Fire gameObjectToFire)
     {
+
         GameObject fireMe = gameObjectToFire.fireObject;
         CircleCollider2D colFire = fireMe.GetComponent<CircleCollider2D>();
 
@@ -85,17 +86,18 @@ public class Moon : MonoBehaviour {
             Debug.LogWarning("Cannot fire " + fireMe.name + ", moon launch object is missing!");
         }
         else if (colMoon != null)
-        {
+        {//Resources.Load("ammo_mass", typeof(GameObject))
             Vector3 dir = (moon.transform.position - launch.transform.position).normalized;
             float radiusMoon = colMoon.radius;
             float radiusFire = colFire.radius;
             if (launch == null) { Debug.Log("Moon's Launch object cannot be found."); return; }
 
             //places just outside moon, safely
-			//launch.position = moon.transform.position + new Vector3(dir.x * radiusMoon, dir.y * radiusMoon, moon.transform.position.z) + new Vector3(dir.x * radiusFire, dir.y * radiusFire, 0);
-			//launch.position += new Vector3(-3,3,0);
-			GameObject instance = Instantiate(fireMe, launch.position, Quaternion.identity) as GameObject;
-            instance.GetComponent<Rigidbody2D>().AddForce(gameObjectToFire.initialForce,ForceMode2D.Impulse);
+            //launch.position = moon.transform.position + new Vector3(dir.x * radiusMoon, dir.y * radiusMoon, moon.transform.position.z) + new Vector3(dir.x * radiusFire, dir.y * radiusFire, 0);
+            //launch.position += new Vector3(-3,3,0);
+            //GameObject instance = Instantiate(fireMe, launch.position, Quaternion.identity) as GameObject;\
+            fireMe.transform.position = launch.position;
+            fireMe.GetComponent<Rigidbody2D>().AddForce(gameObjectToFire.initialForce,ForceMode2D.Impulse);
         }
         else
         {

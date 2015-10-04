@@ -20,11 +20,17 @@ public class WeaponController : MonoBehaviour {
     float shootForce = 0.01f; //Force Multiplier depending on launch magnitude
     public int segmentCount = 20;
     int ammoType = 0;
+    List<GameObject> ammo;
 
     // Use this for initialization
     void Start () {
         lineRenderer = GetComponent<LineRenderer>();
         planets = new List<GameObject>();
+        ammo = new List<GameObject>();
+        GameObject a = Resources.Load("ammo_mass", typeof(GameObject)) as GameObject;
+        GameObject b = Resources.Load("ammo_explosive", typeof(GameObject)) as GameObject;
+        ammo.Add(a);
+        ammo.Add(b);
     }
 
     // Update is called once per frame
@@ -40,7 +46,7 @@ public class WeaponController : MonoBehaviour {
             {
                 if (touches[0].phase == TouchPhase.Began)
                 {
-                    Debug.Log("Start" + touches[0].position);
+                    //Debug.Log("Start" + touches[0].position);
                     //lineRenderer.
                     startPosition = touches[0].position;
                     endPosition = startPosition;
@@ -89,12 +95,12 @@ public class WeaponController : MonoBehaviour {
                 }
                 else if (touches[0].phase == TouchPhase.Ended)
                 {
-                    Debug.Log("Delta" + endPosition);
-                    Debug.Log("End" + touches[0].position);
+                    //Debug.Log("Delta" + endPosition);
+                    //Debug.Log("End" + touches[0].position);
                     //endPostion = startPostion-touches[0].position;
 
-                    if (ammo_mass == null) { Debug.LogWarning("Missing ammo_mass object in weaponcontroller"); return; }
-                    if (ammo_explosive == null) { Debug.LogWarning("Missing ammo_explosive object in weaponcontroller"); return; }
+                    //if (ammo_mass == null) { Debug.LogWarning("Missing ammo_mass object in weaponcontroller"); return; }
+                    //if (ammo_explosive == null) { Debug.LogWarning("Missing ammo_explosive object in weaponcontroller"); return; }
                     //if (launch == null) { Debug.LogWarning("Missing launch object in weaponcontroller"); return; }
                     //Rigidbody2D rb = Utils.AddRigidbody(launch);
                     //Utils.AddCollider(launch);
@@ -106,12 +112,14 @@ public class WeaponController : MonoBehaviour {
                     switch (ammoType)
                     {
                         case 0:
-                            fire = new Fire(ammo_mass);
+                            GameObject a = Instantiate(Resources.Load("Prefabs/ammo_mass", typeof(GameObject)), new Vector2(0.0f,0.0f), Quaternion.identity) as GameObject;
+                            fire = new Fire(a);
                             fire.initialForce = -Vector2.ClampMagnitude(endPosition - (startPosition), radius) * shootForce;
                             BroadcastMessage("Launch", fire);
                             break;
                         case 1:
-                            fire = new Fire(ammo_explosive);
+                            GameObject b = Instantiate(Resources.Load("Prefabs/ammo_explosive", typeof(GameObject)), new Vector2(0.0f, 0.0f), Quaternion.identity) as GameObject;
+                            fire = new Fire(b);
                             fire.initialForce = -Vector2.ClampMagnitude(endPosition - (startPosition), radius) * shootForce;
                             BroadcastMessage("Launch", fire);
                             break;
