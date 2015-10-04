@@ -12,9 +12,15 @@ public class GravityManager : MonoBehaviour {
     List<GameObject> gravitatables; //attracting objects, aka asteroids
     List<GameObject> planets; //destination objects, the earth and moon
     //F=ma
+<<<<<<< HEAD
     public static float GRAVITY_CONSTANT = 0.667408f;
     public static float MASS_MOON = 100f;
     public static float MASS_EARTH = 100f;
+=======
+    public static float GRAVITY_CONSTANT = 2.15f;
+    public static float MASS_MOON = .1f;
+    public static float MASS_EARTH = 3f;
+>>>>>>> origin/master
     enum axisRotation { COUNTERCLOCKWISE = -1, CLOCKWISE = 1 };
 
 

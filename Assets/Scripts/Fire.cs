@@ -8,6 +8,7 @@ public class Fire {
 
     //object that's being fired
     public GameObject fireObject;
+    public Vector2 initialForce;
 
     //to discuss
     //public Vector3 fireDirection

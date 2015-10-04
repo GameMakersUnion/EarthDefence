@@ -46,7 +46,7 @@ public class PredictionLines : MonoBehaviour {
         planets.Add(moon);
 
         if (moon != null && once==true) { 
-            PlotTrajectory(new Vector3(-4.0f, 0.0f, 0.0f), new Vector3(0.0f, 0.5f, 0.0f), 1.0f, 20.0f);
+            //PlotTrajectory(new Vector3(-4.0f, 0.0f, 0.0f), new Vector3(0.0f, 0.5f, 0.0f), 1.0f, 20.0f);
             once = false;
         }
 
@@ -88,10 +88,11 @@ public class PredictionLines : MonoBehaviour {
             Debug.DrawLine(prev, pos, Color.red);
             Debug.Log(pos);
             curvePoints.Add(Camera.main.WorldToViewportPoint(pos));
+            //curvePoints.Add(pos);
             prev = pos;
         }
         line = new VectorLine("Spline", new List<Vector2>(curvePoints.Count+1), 2.0f, LineType.Continuous, Joins.Weld);
-        line.useViewportCoords = true;
+        //line.useViewportCoords = true;
         //Vector2[] curvePoints = new Vector2[(int)Mathf.Ceil(maxTime / timestep + 1)]
         if (curvePoints.Count > 0) {
             Debug.Log(curvePoints.Count);
