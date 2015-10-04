@@ -212,7 +212,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 132348, guid: df868edbbdae5eb4ea10f35847df64a7, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22333096, guid: df868edbbdae5eb4ea10f35847df64a7, type: 2}
       propertyPath: m_Enabled
@@ -318,6 +318,10 @@ Prefab:
       propertyPath: background
       value: 
       objectReference: {fileID: 355296153}
+    - target: {fileID: 11486684, guid: 2ae2bf7f42ced3344848df6f9d374f4c, type: 2}
+      propertyPath: showCanvas
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2ae2bf7f42ced3344848df6f9d374f4c, type: 2}
   m_IsPrefabParent: 0

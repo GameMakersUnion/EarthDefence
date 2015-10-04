@@ -81,4 +81,17 @@ public static class Utils
             rb.mass = mass;
         }
     }
+
+    public static float FindAngle(Vector3 p1, Vector3 p2)
+    {
+        //First find the difference between the start point and the end point.
+        //deltaY = P2_y - P1_y
+        //deltaX = P2_x - P1_x
+        Vector3 delta = (p2 - p1);
+
+        //Then calculate the angle.
+        //angle = arctan(deltaY / deltaX) * 180 / PI
+        float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
+        return angle;
+    }
 }
