@@ -7,9 +7,11 @@ public class Earth : MonoBehaviour {
 
 	void Awake () {
         earth = gameObject; //for easier reading
-        Utils.AddRigidbody(earth);
+        Rigidbody2D rb = Utils.AddRigidbody(earth);
         Utils.FreezeRigidbody(earth);
         Utils.AddCollider(earth);
+        Utils.SetMass(earth, GravityManager.MASS_EARTH);
+
 	}
 	
 	// Update is called once per frame

@@ -61,7 +61,7 @@ public class WeaponController : MonoBehaviour {
                     //Utils.AddTrailRenderer(launch, 15f);
                     //prepare Fireable object
                     Fire fire = new Fire(launch);
-                    fire.initialForce = -Vector2.ClampMagnitude(endPosition - (startPosition), radius) * 0.01f;
+                    fire.initialForce = -Vector2.ClampMagnitude(endPosition - (startPosition), radius) * 0.1f;
                     BroadcastMessage("Launch", fire);
                     //instance = Instantiate(launch, new Vector3(-10.0f, -4.0f, 0.0f), Quaternion.identity) as GameObject;
                 }

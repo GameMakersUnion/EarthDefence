@@ -13,7 +13,7 @@ public class GravityManager : MonoBehaviour {
     List<GameObject> planets; //destination objects, the earth and moon
     //F=ma
     public static float GRAVITY_CONSTANT = 0.667408f;
-    public static float MASS_MOON = 100f;
+    public static float MASS_MOON = 0.1f;
     public static float MASS_EARTH = 100f;
     enum axisRotation { COUNTERCLOCKWISE = -1, CLOCKWISE = 1 };
 
@@ -62,7 +62,6 @@ public class GravityManager : MonoBehaviour {
         {
             foreach (var planet in planets)
             {
-                /*
                 //float dist = Vector3.Distance(gravit.transform.position, planet.transform.position);
                 float distSqr = (planet.transform.position - gravit.transform.position).sqrMagnitude;
                 Vector3 dir = (planet.transform.position - gravit.transform.position).normalized;
@@ -75,7 +74,6 @@ public class GravityManager : MonoBehaviour {
                 //Color col = new Color(1 / dist, 1f, 0f);
                 Color col = new Color(1 / distSqr, 1f, 0f);
                 Debug.DrawRay(gravit.transform.position, dir, col);
-                 */
             }
         }
     }
