@@ -45,10 +45,9 @@ public class WeaponController : MonoBehaviour {
 
         Touch[] touches = Input.touches;
 
-        if (touches.Length == 0 || touches.Length >= 2)  {
+        if ((touches.Length == 0 || touches.Length >= 2) && line != null) {
             line.points2[0] = Vector2.zero;
             line.points2[1] = Vector2.zero;
-           // line.Draw();
         }
 
             if (touches.Length > 0)
@@ -56,7 +55,6 @@ public class WeaponController : MonoBehaviour {
             //Single touch (move)
             if (touches.Length == 1)
             {
-              
                 if (touches[0].phase == TouchPhase.Began)
                 {
                     //Debug.Log("Start" + touches[0].position);
@@ -120,7 +118,6 @@ public class WeaponController : MonoBehaviour {
                     //prepare Fireable object
                     Fire fire;
                     Vector2 fireVector;
-                  
                     switch (ammoType)
                     {
                         case 0:
@@ -165,6 +162,7 @@ public class WeaponController : MonoBehaviour {
                     line = new VectorLine("Line", linePoints, 2.0f);
                     */
                 //line.useViewportCoords = true;
+                if (line == null) return;
                 line.points2[0] = Vector2.zero;
                 line.points2[1] = Vector2.zero;
                 

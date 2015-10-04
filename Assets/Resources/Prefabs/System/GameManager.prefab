@@ -155,8 +155,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 200
   launch: {fileID: 151718, guid: 2d39d8b83a83ce741b0ada975c6cede4, type: 2}
+  ammo_mass: {fileID: 0}
+  ammo_explosive: {fileID: 0}
+  ammo_laser: {fileID: 0}
   x: 0
   y: 0
+  segmentCount: 20
 --- !u!114 &11456256
 MonoBehaviour:
   m_ObjectHideFlags: 1

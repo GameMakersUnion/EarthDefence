@@ -19,7 +19,7 @@ public class Launchable : MonoBehaviour {
 	void Update () {
         if(c.enabled == false)
         {
-            if (Vector2.Distance(start, new Vector2(transform.position.x, transform.position.y)) > 5.0f)
+            if (Vector2.Distance(start, new Vector2(transform.position.x, transform.position.y)) > 1.0f)
             {
                 c.enabled = true;
             }
