@@ -20,6 +20,44 @@ public class UIAdapter : MonoBehaviour {
         if (bm == null) { Debug.LogWarning("Button Manager script not found! Cannot issue UI commands!"); return; }
     }
 
+
+    bool leftDown;
+    bool rightDown;
+
+    public void OnClickLeft(int status)
+    {
+        switch (status)
+        {//0=Off 1=On
+            case 0: leftDown = false; break;
+            case 1: leftDown = true; break;
+        }
+    }
+    public void OnClickRight(int status)
+    {
+        switch (status)
+        {
+            case 0: rightDown = false; break;
+            case 1: rightDown = true; break;
+        }
+    }
+
+
+    public void Update()
+    {
+        if (leftDown)
+        {
+            if (bm == null) { Debug.LogWarning("Button Manager not found!"); return; }
+            bm.LeftPressed();
+        }
+        if (rightDown)
+        {
+            if (bm == null) { Debug.LogWarning("Button Manager not found!"); return; }
+            bm.RightPressed();
+        }
+    }
+
+
+    /*
     public void OnClickLeft()
     {
         if (bm == null) { Debug.LogWarning("Button Manager not found!"); return; }
@@ -29,6 +67,6 @@ public class UIAdapter : MonoBehaviour {
     {
         if (bm == null) { Debug.LogWarning("Button Manager not found!"); return; }
         bm.RightPressed();
-    }
+    }*/
 
 }

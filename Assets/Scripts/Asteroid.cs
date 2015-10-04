@@ -16,7 +16,7 @@ public class Asteroid : MonoBehaviour {
         ast = this.gameObject;
         ast.tag = "Asteroid";
         Rigidbody2D rb = Utils.AddRigidbody(ast);
-        rb.velocity = new Vector2(Random.Range(-1f, 1f), (Random.Range(-0.5f, 0.5f)));
+        rb.velocity = new Vector2(Random.Range(-1f, 1f), (Random.Range(-1f, 1f)));
         Utils.AddCollider(ast);
 	}
 }

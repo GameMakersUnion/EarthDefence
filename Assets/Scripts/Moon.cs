@@ -7,13 +7,18 @@ public class Moon : MonoBehaviour {
     GameObject earth;
     public Transform launch;
     CircleCollider2D colMoon;
+    Rigidbody2D rb;
     float angle;
+
+    Vector3 lastPos;
+    Vector3 newPos;
+    Vector3 storedVel;
 
 	void Awake () {
         moon = gameObject; //for easier reading	
         earth = GameObject.FindGameObjectWithTag("Earth");
         colMoon = Utils.AddCollider(moon);
-        Utils.AddRigidbody(moon);
+        rb = Utils.AddRigidbody(moon);
         Utils.FreezeRigidbody(moon);
         Utils.SetMass(moon, GravityManager.MASS_MOON);
         Utils.AddTrailRenderer(moon, 150f);
@@ -119,7 +124,12 @@ public class Moon : MonoBehaviour {
         //TOA
         float x = dist * Mathf.Cos((Mathf.Deg2Rad * angle));
         float y = dist * Mathf.Sin((Mathf.Deg2Rad * angle));
+        lastPos = moon.transform.position;
         moon.transform.position = new Vector3(x, y, moon.transform.position.z);
+        newPos = moon.transform.position;
+        storedVel = newPos - lastPos;
+
+        
 
         if (moveDir != 0)
         {
@@ -130,4 +140,54 @@ public class Moon : MonoBehaviour {
             //Debug.Log(angle);
         }
     }
+
+    /**
+     *  Need manually calculate physics of objects the moon collides into
+     */
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        print(coll.gameObject.name);
+        if (coll.gameObject.GetComponent<Asteroid>()!=null){
+            //step1
+            Vector3 asteroidNewDir = (coll.transform.position - moon.transform.position).normalized;
+            print(asteroidNewDir);
+            //step2
+            //float magnitude = rb.velocity.magnitude;
+            float magnitude = storedVel.magnitude;
+            print(magnitude);
+            //step3
+            //float step3 = Vector3.Dot(rb.velocity, asteroidNewDir);
+            //Debug.DrawLine(Vector3.zero, asteroidNewDir * 10f);
+            //Debug.DrawLine(Vector3.zero, storedVel * 10f);
+            float step3 = 1 - Vector3.Dot(asteroidNewDir, storedVel);
+            print(step3);
+            //step4
+            float step4 = magnitude * step3;
+            print(step4);
+            //step5
+            Vector3 step5 = asteroidNewDir * step4;
+            //step6
+            Rigidbody2D astRb = coll.gameObject.GetComponent<Rigidbody2D>();
+            if (astRb == null) { Debug.LogWarning("Asteroid missing a rigidbody, cannot assign new velocity."); return; }
+            Debug.Log("Asteroid " + coll.gameObject.name + "had velocity: " + astRb.velocity + ", now has: " + step5);
+            astRb.velocity = step5 * 25f;
+            Debug.DrawLine(Vector3.zero, astRb.velocity );
+
+
+            //Debug.Break();
+
+            /*
+            upon collision 
+            - step 1: get (moon.pos - ast.pos).norm;  //send ast this way
+            - get scalar2 :: get magnitude of velocity of moon
+            - get scalar3 :: dot product of moon's current movement vector, and the asteroid's new direction
+            - mult scaler2 * sc3. 
+            - mult vect step1 against above
+            - give the ast that velocity
+            */
+
+        }
+    
+    }
+
 }
