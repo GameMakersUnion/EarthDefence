@@ -9,6 +9,7 @@ public class ChaosManager : MonoBehaviour {
     float delayTimer;
     BoxCollider2D[] boxes;
     GameObject earth;
+    public List<GameObject> asteroids;
 
     // Use this for initialization
     void Start () {
@@ -34,18 +35,23 @@ public class ChaosManager : MonoBehaviour {
                 float maxWidth = boxes[picker].offset.x - boxes[picker].bounds.extents.x;
                 float minHeight = boxes[picker].offset.y + boxes[picker].bounds.extents.y;
                 float maxHeight = boxes[picker].offset.y - boxes[picker].bounds.extents.y;
-                GameObject instance = Instantiate(Resources.Load("Prefabs/asteroids_0", typeof(GameObject)), new Vector2(Random.Range(minWidth,maxWidth), Random.Range(minHeight, maxHeight)), Quaternion.identity) as GameObject;
+                //GameObject instance = Instantiate(Resources.Load("Prefabs/asteroids_0", typeof(GameObject)), new Vector2(Random.Range(minWidth,maxWidth), Random.Range(minHeight, maxHeight)), Quaternion.identity) as GameObject;
+                GameObject chosenAst = asteroids[Random.Range(0, asteroids.Count-1)];
+                GameObject instance = Instantiate(chosenAst, new Vector2(Random.Range(minWidth,maxWidth), Random.Range(minHeight, maxHeight)), Quaternion.identity) as GameObject;
+                Utils.AddRigidbody(instance);
+                Utils.AddCollider(instance);
+                Utils.AddTrailRenderer(instance, 3f);
                 Rigidbody2D a = instance.GetComponent<Rigidbody2D>();
                
                 if (earth == null) { earth = GameObject.FindWithTag("Earth"); }
                 a.AddForce((new Vector3(earth.transform.position.x+ Random.Range(-20.0f, 20.0f), earth.transform.position.y+ Random.Range(-20.0f, 20.0f), 0.0f) - a.transform.position).normalized * Random.Range(1.5f,5.5f),ForceMode2D.Impulse);
-                delayTimer = Random.Range(1.0F, 2.0F);
+                delayTimer = Random.Range(1f, 2f);
                // Debug.Log("Pew: " + delayTimer);
             }
 
             //We can have some peace
             if (chaosTimer <= 0.0f) { 
-                peaceTimer = Random.Range(10.0F, 30.0F);
+                peaceTimer = Random.Range(5.0F, 15.0F);
             }
         }
         else if (peaceTimer > 0.0f)

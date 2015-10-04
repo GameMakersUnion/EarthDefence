@@ -32,6 +32,7 @@ public class Explosive : MonoBehaviour {
         foreach(Collider2D other in colliders)
         {
             Rigidbody2D otherrb = other.GetComponent<Rigidbody2D>();
+            if (otherrb == null) { Debug.LogWarning("Rigidbody missing from object on outside");  return; }
             otherrb.AddForce((otherrb.position-rb.position).normalized* explosionForce, ForceMode2D.Impulse);
         }
         //Destroy(gameObject);
