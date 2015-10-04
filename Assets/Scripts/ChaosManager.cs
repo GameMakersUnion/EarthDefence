@@ -26,7 +26,7 @@ public class ChaosManager : MonoBehaviour {
 
             chaosTimer -= Time.deltaTime;
             delayTimer -= Time.deltaTime;
-            Debug.Log("Chaos: " + chaosTimer);
+           // Debug.Log("Chaos: " + chaosTimer);
             if (delayTimer <= 0.0f)
             {
                 int picker = Random.Range(0, boxes.Length-1);
@@ -40,7 +40,7 @@ public class ChaosManager : MonoBehaviour {
                 if (earth == null) { earth = GameObject.FindWithTag("Earth"); }
                 a.AddForce((new Vector3(earth.transform.position.x+ Random.Range(-20.0f, 20.0f), earth.transform.position.y+ Random.Range(-20.0f, 20.0f), 0.0f) - a.transform.position).normalized * Random.Range(1.5f,5.5f),ForceMode2D.Impulse);
                 delayTimer = Random.Range(1.0F, 2.0F);
-                Debug.Log("Pew: " + delayTimer);
+               // Debug.Log("Pew: " + delayTimer);
             }
 
             //We can have some peace
@@ -51,7 +51,7 @@ public class ChaosManager : MonoBehaviour {
         else if (peaceTimer > 0.0f)
         {
             peaceTimer -= Time.deltaTime;
-            Debug.Log("Peace: " + peaceTimer);
+            //Debug.Log("Peace: " + peaceTimer);
             if (peaceTimer <= 0.0f)
             {
                 chaosTimer = Random.Range(1.0F, 10.0F);

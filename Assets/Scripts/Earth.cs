@@ -18,4 +18,10 @@ public class Earth : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+
+        Destroy(coll.gameObject);
+    }
 }

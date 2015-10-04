@@ -35,6 +35,7 @@ public class Explosive : MonoBehaviour {
             otherrb.AddForce((otherrb.position-rb.position).normalized* explosionForce, ForceMode2D.Impulse);
         }
         //Destroy(gameObject);
+        GameObject a = Instantiate(Resources.Load("Prefabs/Explosion", typeof(GameObject)), new Vector2(transform.position.x, transform.position.y), Quaternion.identity) as GameObject;
         Destroy(this.gameObject);
     }
 }

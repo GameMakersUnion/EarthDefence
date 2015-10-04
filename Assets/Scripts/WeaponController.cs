@@ -17,10 +17,12 @@ public class WeaponController : MonoBehaviour {
     VectorLine line; // Preiction line
     List<GameObject> planets; //destination objects, the earth and moon
     public float x=0.0f, y = 0.0f;
-    float shootForce = 0.01f; //Force Multiplier depending on launch magnitude
+    float shootForce = 0.05f; //Force Multiplier depending on launch magnitude
     public int segmentCount = 20;
     int ammoType = 0;
     List<GameObject> ammo;
+    GameObject moon;
+    List<Vector2> linePoints;
 
     // Use this for initialization
     void Start () {
@@ -31,6 +33,10 @@ public class WeaponController : MonoBehaviour {
         GameObject b = Resources.Load("ammo_explosive", typeof(GameObject)) as GameObject;
         ammo.Add(a);
         ammo.Add(b);
+        linePoints = new List<Vector2>();
+        linePoints.Add(new Vector2(0, Random.Range(0, Screen.height)));             // ...one on the left side of the screen somewhere
+        linePoints.Add(new Vector2(Screen.width - 1, Random.Range(0, Screen.height)));  // ...and one on the right
+        //VectorLine.canvas.sortingOrder = -1;
     }
 
     // Update is called once per frame
@@ -39,7 +45,12 @@ public class WeaponController : MonoBehaviour {
 
         Touch[] touches = Input.touches;
 
-        if (touches.Length > 0)
+        if (touches.Length == 0 || touches.Length >= 2)  {
+            line.points2[0] = Vector2.zero;
+            line.points2[1] = Vector2.zero;
+        }
+
+            if (touches.Length > 0)
         {
             //Single touch (move)
             if (touches.Length == 1)
@@ -61,9 +72,9 @@ public class WeaponController : MonoBehaviour {
                     planets.Add(earth);
 
                     //moon
-                    GameObject moon = GameObject.FindWithTag("Moon");
+                     moon = GameObject.FindWithTag("Moon");
                     if (moon == null) { Debug.LogWarning("Moon missing!"); return; }
-                    //planets.Add(moon);
+                    planets.Add(moon);
 
                     //Debug.Log(touches[0].deltaPosition);
                     endPosition = touches[0].position;
@@ -72,9 +83,7 @@ public class WeaponController : MonoBehaviour {
                     //-Vector2.ClampMagnitude(endPosition - (startPosition), radius) * 0.01f
                     //
                     //Fire fire;
-                    switch (ammoType)
-                    {
-                        case 0:
+                 
                            // fire = new Fire(launch); ;
                            
                             //fire.initialForce = -Vector2.ClampMagnitude(endPosition - (startPosition), radius) * shootForce;
@@ -82,15 +91,14 @@ public class WeaponController : MonoBehaviour {
                             //new Vector2(moon.transform.position.x, moon.transform.position.y)
 
                             /// Vector2 force = -Vector2.ClampMagnitude(endPosition - (startPosition), radius) * shootForce;
-                            Vector2 force = (endPosition - (startPosition));
+                            Vector2 force = Vector2.ClampMagnitude(endPosition - (startPosition), radius).magnitude * Vector2.ClampMagnitude(endPosition - (startPosition), radius).normalized;
                             Vector2 start = new Vector2(moon.transform.position.x, moon.transform.position.y);
 
                            // Debug.Log("Direction" + force.normalized + " | " + force);
-                            //PlotTrajectory(Vector2.zero, -force, start , 0.1f, 3.0f);
+                            PlotTrajectory(Vector2.zero, force * shootForce, start , 0.01f, 1.0f);
                             //BroadcastMessage("Launch", fire);//-(endPosition - (startPosition)) * shootForce
                             //simulatePath(new Vector2(moon.transform.position.x, moon.transform.position.y), new Vector2(0.0f,1.0f) , fire, planets);
-                            break;
-                    }
+            
                     
                 }
                 else if (touches[0].phase == TouchPhase.Ended)
@@ -109,18 +117,21 @@ public class WeaponController : MonoBehaviour {
                     //Utils.AddTrailRenderer(launch, 15f);
                     //prepare Fireable object
                     Fire fire;
+                    Vector2 fireVector;
                     switch (ammoType)
                     {
                         case 0:
                             GameObject a = Instantiate(Resources.Load("Prefabs/ammo_mass", typeof(GameObject)), new Vector2(0.0f,0.0f), Quaternion.identity) as GameObject;
                             fire = new Fire(a);
-                            fire.initialForce = -Vector2.ClampMagnitude(endPosition - (startPosition), radius) * shootForce;
+                             fireVector = Vector2.ClampMagnitude(endPosition - (startPosition), radius).magnitude * Vector2.ClampMagnitude(endPosition - (startPosition), radius).normalized;
+                            fire.initialForce = fireVector * shootForce;
                             BroadcastMessage("Launch", fire);
                             break;
                         case 1:
                             GameObject b = Instantiate(Resources.Load("Prefabs/ammo_explosive", typeof(GameObject)), new Vector2(0.0f, 0.0f), Quaternion.identity) as GameObject;
                             fire = new Fire(b);
-                            fire.initialForce = -Vector2.ClampMagnitude(endPosition - (startPosition), radius) * shootForce;
+                             fireVector = Vector2.ClampMagnitude(endPosition - (startPosition), radius).magnitude * Vector2.ClampMagnitude(endPosition - (startPosition), radius).normalized;
+                            fire.initialForce = fireVector * shootForce;
                             BroadcastMessage("Launch", fire);
                             break;
                         case 2:
@@ -138,9 +149,26 @@ public class WeaponController : MonoBehaviour {
                 //worldPos = Camera.main.ScreenToWorldPoint(Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
                 Vector2 clamped = Vector2.ClampMagnitude(endPosition - (startPosition), radius);
                 
-                lineRenderer.SetPosition(0, Camera.main.ScreenToWorldPoint(startPosition)+ Vector3.forward);
-                lineRenderer.SetPosition(1, Camera.main.ScreenToWorldPoint(clamped+ startPosition) + Vector3.forward);
+
+                if (moon == null) { moon = GameObject.FindWithTag("Moon"); }
+                //Vector2 moonScreen = Camera.main.ScreenToWorldPoint(moon.transform.position);
+                //lineRenderer.SetPosition(0, Camera.main.ScreenToWorldPoint(moonScreen) + Vector3.forward);
+                // lineRenderer.SetPosition(1, Camera.main.ScreenToWorldPoint(clamped+ startPosition + new Vector2(moon.transform.position.x, moon.transform.position.y)) + Vector3.forward);
                 
+
+                // Make a VectorLine object using the above points, with a width of 2 pixels
+                /*
+                if(line == null)
+                    line = new VectorLine("Line", linePoints, 2.0f);
+                    */
+                //line.useViewportCoords = true;
+                line.points2[0] = Vector2.zero;
+                line.points2[1] = Vector2.zero;
+                
+                //line.points2[1] = Camera.main.ScreenToWorldPoint(Vector2.ClampMagnitude(endPosition - (startPosition), radius));
+                // Draw the line
+               // line.Draw();
+
             }
 
         }
@@ -172,7 +200,7 @@ public class WeaponController : MonoBehaviour {
         }
        // Debug.Log("FinalGravity" + finalGravity);
        // Debug.Log("Final Gravity"+(start + startVelocity * time + finalGravity * time * time * 0.5f));
-        return start + startVelocity * time + finalGravity * time * time * 0.5f;
+        return start + startVelocity * time - finalGravity * time * time * 0.2f;
     }
 
     public void PlotTrajectory(Vector2 start, Vector2 startVelocity, Vector2 offset,float timestep, float maxTime)
